@@ -21,6 +21,11 @@ campeonesController.obtenerCampeon = async (req, res) => {
 //Actualizar un campeon
 campeonesController.actualizarCampeon = async (req, res) => {
     const updatechamp = await Campeon.findOneAndUpdate({numcampeon:req.params.numcamp}, req.body);
+    if (updatechamp != null) {
+        res.json({status: "Campeón Actualizado"});
+    }else{
+        res.json({status:"Not Found"});
+    }
     console.log(updatechamp);
 };
 
@@ -29,7 +34,7 @@ campeonesController.eliminarCampeon = async (req, res) => {
     const deletechamp = await Campeon.findOneAndDelete({numcampeon:req.params.numcamp});
     console.log(deletechamp);
     if (deletechamp != null) {
-        res.json({status:"Producto eliminado"});
+        res.json({status:"Campeón eliminado"});
     }else{
         res.json({status: "Not Found"});
     }
@@ -39,6 +44,9 @@ campeonesController.eliminarCampeon = async (req, res) => {
 campeonesController.insertarCampeon = async (req, res) => {
     const campeonInsertado = new Campeon(req.body);
     await campeonInsertado.save();
-};
+    if (campeonInsertado != null){
+        res.json({status:"Campeon insertado"})
+    }
+}
 
 module.exports = campeonesController;
